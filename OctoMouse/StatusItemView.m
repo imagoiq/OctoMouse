@@ -133,7 +133,31 @@
         NSPoint mouseDownPoint = NSMakePoint(x, thickness - mouseTextSize.height);
         NSRect mouseDownRect = NSMakeRect(mouseDownPoint.x, mouseDownPoint.y, _lastMouseLength, mouseTextSize.height);
         [mouseDownText drawInRect:mouseDownRect withAttributes:attr];
-    } else {
+    }
+    else if(menuBarStyle == 3){
+        InputEventsLogger* global = [[InputEventsController shared] globalLogger];
+        int mouseDown = [global mouseDown];
+        NSString* mouseDownText = [NSString stringWithFormat:@"%d", mouseDown];
+        
+        float x = 5;
+
+        // Default style
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        [style setAlignment:NSRightTextAlignment];
+        NSMutableDictionary *attr = [NSMutableDictionary dictionaryWithObject:style forKey:NSParagraphStyleAttributeName];
+        NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:9.5];
+        [attr setObject:font forKey:NSFontAttributeName];
+        [attr setObject:color forKey:NSForegroundColorAttributeName];
+        
+        
+        NSPoint mouseDownPoint = NSMakePoint(x, thickness - 12);
+        NSRect mouseDownRect = NSMakeRect(mouseDownPoint.x, mouseDownPoint.y, _lastMouseLength, 12);
+        [mouseDownText drawInRect:mouseDownRect withAttributes:attr];
+        
+        float length = 30;
+        [_statusItem setLength:length];
+    }
+    else {
         float margin = 5;
         NSImage *mouseIcon = self.isHighlighted ? _alternateMouseImage : _mouseImage;
         NSSize iconSize = [mouseIcon size];
